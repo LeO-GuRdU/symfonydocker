@@ -5,3 +5,11 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+recetas:
+    path:       /recetas/new
+    controller: App\Controller\RecetasController::new
+
+app_logout:
+    path: /logout
+    methods: GET
