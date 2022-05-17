@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Recetas;
 use App\Form\Type\RecetasType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -23,7 +24,8 @@ class RecetasController extends AbstractController
         ]);
     }
 
-    public function new(Request $request): Response
+    #[Route('/recetas/new', name: 'nueva_receta')]
+    public function new(Request $request, ManagerRegistry $doctrine): Response
     {
         // creates a receta object and initializes some data for this example
         $receta = new Recetas();
@@ -44,6 +46,23 @@ class RecetasController extends AbstractController
             ->getForm();
 
         $form = $this->createForm(RecetasType::class, $receta);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $newreceta = new Recetas();
+            $entityManager = $doctrine->getManager();
+            $newreceta = $form->getData();
+            $user = $this->getUser();
+            $newreceta->setUserId($user);
+                    // tell Doctrine you want to (eventually) save the Product (no queries yet)
+            $entityManager->persist($newreceta);
+            // actually executes the queries (i.e. the INSERT query)
+            $entityManager->flush();
+
+            return new Response('Saved new product with id '.$newreceta->getId());
+        }
 
         return $this->renderForm('recetas/new.html.twig', [
             'form' => $form,

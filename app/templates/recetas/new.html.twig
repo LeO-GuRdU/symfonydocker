@@ -4,6 +4,7 @@
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block body %}
+{{ parent() }}
     <h1>Ingresar nueva Receta:</h1>
     {{ form(form) }}
 {% endblock %}
