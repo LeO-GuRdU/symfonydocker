@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Recetas;
+use App\Repository\RecetasRepository;
 use App\Form\Type\RecetasType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,11 +17,18 @@ use Symfony\Component\HttpFoundation\Request;
 class RecetasController extends AbstractController
 {
     #[Route('/recetas', name: 'app_recetas')]
-    public function index(): Response
+    public function index(RecetasRepository $recetasRepository): Response
     {
 
+        $recetas = $recetasRepository->findAll();
+
+        if (!$recetas) {
+            throw $this->createNotFoundException(
+                'No hay recetas en el sitio'
+            );
+        }
         return $this->render('recetas/index.html.twig', [
-            'controller_name' => 'RecetasController',
+            'recetas' => $recetas
         ]);
     }
 

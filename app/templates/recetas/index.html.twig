@@ -1,21 +1,87 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}{% endblock %}
+{% block title %}
+	{{ parent() }}
+{% endblock %}
 
 {% block body %}
-{{ parent() }}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	{{ parent() }}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<div class="example-wrapper">
+		<h1>Recetas en el sitio</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/symfony_docker/src/Controller/RecetasController.php'|file_link(0) }}">src/Controller/RecetasController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/symfony_docker/templates/recetas/index.html.twig'|file_link(0) }}">templates/recetas/index.html.twig</a></code></li>
-    </ul>
-</div>
+		{% for receta in recetas %}
+
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<h2>Titulo:
+							{{ receta.nombre }}
+						</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						Comensales:
+						{{ receta.cant }}
+					</div>
+					<div class="col">
+						Tipo de receta:
+						{{ receta.tipo }}
+					</div>
+					<div class="col">
+						Dificultad de la receta:
+						{{ receta.dificultad }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<h3>Aca la imagen
+						</h3>
+					</div<divclass="row">
+					<div class="col-12">
+						<h3>Ingredientes:
+						</h3>
+						<ul>
+
+							{% for ingrediente in receta.Ingredientes %}
+								<li>
+									{{ ingrediente }}
+								</li>
+							{% endfor %}
+
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<h3>Pasos a seguir:
+						</h3>
+						<ul>
+
+							{% for paso in receta.pasos %}
+								<li>
+									{{ paso }}
+								</li>
+							{% endfor %}
+
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		{% endfor %}
+	</div>
 {% endblock %}

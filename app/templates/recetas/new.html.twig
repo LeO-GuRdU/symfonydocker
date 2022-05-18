@@ -3,8 +3,38 @@
 {# this tag only applies to the forms defined in this template #}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
-{% block body %}
-{{ parent() }}
+	{% block body %}
+	{{ parent() }}
     <h1>Ingresar nueva Receta:</h1>
-    {{ form(form) }}
+
+
+	{{ form_start(form) }}
+	{{ form_row(form.nombre) }}
+	{{ form_row(form.tipo) }}
+	{{ form_row(form.cant) }}
+	{{ form_row(form.dificultad) }}
+	{{ form_label(form.ingredientes) }}
+			<ul id="ingrediente-fields-list" data-prototype="{{ form_widget(form.ingredientes.vars.prototype)|e }}" data-widget-tags="{{ '<li></li>'|e }}" data-widget-counter="{{ form.ingredientes|length }}"> {% for textField in form.ingredientes %}
+			<li>
+				{{ form_errors(textField) }}
+				{{ form_widget(textField) }}
+			</li>
+		{% endfor %}
+	</ul>
+
+	<button type="button" class="add-another-collection-widget" data-list-selector="#ingrediente-fields-list">Agregar Ingrediente</button>
+    {{ form_label(form.pasos) }}
+	{# store the prototype on the data-prototype attribute #}
+		<ul id="pasos-fields-list" data-prototype="{{ form_widget(form.pasos.vars.prototype)|e }}" data-widget-tags="{{ '<li></li>'|e }}" data-widget-counter="{{ form.pasos|length }}"> {% for textField in form.pasos %}
+			<li>
+				{{ form_errors(textField) }}
+				{{ form_widget(textField) }}
+			</li>
+		{% endfor %}
+	</ul>
+
+	<button type="button" class="add-another-collection-widget" data-list-selector="#pasos-fields-list">Agregar Paso</button>
+
+	{{ form_row(form.imagen) }}
+	{{ form_end(form) }}
 {% endblock %}
