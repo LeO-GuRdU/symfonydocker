@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<div class="container h-100">
+		<div class="row h-100 justify-content-center align-items-center">
+			<! -- Contenedor que tiene todo el formulario de registro en su interior -->
+			<div class="col-6 shadow bg-light rounded my-3 p-5 border border-dark">
+				<div class="col d-flex justify-content-center">
+					<h1>Recetas de
+						{{ receta.nombre }}</h1>
+				</div>
+
+
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<h2>Titulo:
+								{{ receta.nombre }}
+							</h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							Comensales:
+							{{ receta.cant }}
+						</div>
+						<div class="col">
+							Tipo de receta:
+							{{ receta.tipo }}
+						</div>
+						<div class="col">
+							Dificultad de la receta:
+							{{ receta.dificultad }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							{% if receta.imagen %}
+								<ul><img src="{{ asset('uploads/images/' ~ receta.imagen) }}" width="500" height="600"></ul>
+							{% endif %}
+						</div>
+						<divclass="row">
+							<div class="col-12">
+								<h3>Ingredientes:
+								</h3>
+								<ul>
+
+									{% for ingrediente in receta.Ingredientes %}
+										<li>
+											{{ ingrediente }}
+										</li>
+									{% endfor %}
+
+								</ul>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<h3>Pasos a seguir:
+								</h3>
+								<ul>
+
+									{% for paso in receta.pasos %}
+										<li>
+											{{ paso }}
+										</li>
+									{% endfor %}
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

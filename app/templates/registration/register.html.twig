@@ -1,26 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Registro
+{% endblock %}
 
 {% block body %}
-{{ parent() }}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+	{{ parent() }}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
 
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.user_name) }}
-        {{ form_row(registrationForm.plainPassword, {
+	<div class="example-wrapper">
+		<! -- Contenedor que tiene el título de la página de registro en su interior -->
+		<nav class="navbar bg-secondary navbar-expand-lg navbar-light">
+			<div class="col justify-content-center">
+				<div class="row h-100">
+					<div class="container d-flex justify-content-center">
+						<h1 style="color:rgb(235, 145, 72);text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF">Bienvenido al blog de</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="container d-flex justify-content-center">
+						<h1 style="color:rgb(235, 80, 72);text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF">Recetas Piolas!</h1>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<div class="container h-100">
+			<div class="row h-100 justify-content-center align-items-center">
+				<! -- Contenedor que tiene todo el formulario de registro en su interior -->
+				<div class="col-6 shadow bg-secondary rounded my-3 p-5 border border-dark">
+					<div class="col d-flex justify-content-center ">
+						<h1>Registro</h1>
+					</div>
+					{{ form_start(registrationForm) }}
+					{{ form_row(registrationForm.user_name) }}
+					{{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
-        {{ form_row(registrationForm.name) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.image) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+					{{ form_row(registrationForm.name) }}
+					{{ form_row(registrationForm.lastname) }}
+					{{ form_row(registrationForm.email) }}
+					{{ form_row(registrationForm.image) }}
+					{{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+					<button type="submit" class="btn">Register</button>
+					{{ form_end(registrationForm) }}
+				</div>
+			</div>
+		</div>
+
+	</div>
 {% endblock %}

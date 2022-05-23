@@ -19,16 +19,17 @@
 		}
 	</style>
 
-	<div class="example-wrapper">
-		<h1>Recetas en el sitio</h1>
-
+	<div class="example-wrapper bg-light" >
+	<div class="col d-flex justify-content-center">
+		<h1 style="color:rgb(235, 145, 72);text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF">Recetas en el sitio</h1>
+	</div>
 		{% for receta in recetas %}
 
-			<div class="container">
+			<div class="container shadow bg-secondary rounded my-3 p-5 border border-dark">
 				<div class="row">
 					<div class="col">
 						<h2>Titulo:
-							{{ receta.nombre }}
+							<a class="my-3" style="color:#3282b8;" href='{{ path('ver-receta',{id:receta.id})}}'><strong>{{ receta.nombre }}</strong></a>
 						</h2>
 					</div>
 				</div>
@@ -47,37 +48,10 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-12">
-						<h3>Aca la imagen
-						</h3>
-					</div<divclass="row">
-					<div class="col-12">
-						<h3>Ingredientes:
-						</h3>
-						<ul>
-
-							{% for ingrediente in receta.Ingredientes %}
-								<li>
-									{{ ingrediente }}
-								</li>
-							{% endfor %}
-
-						</ul>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<h3>Pasos a seguir:
-						</h3>
-						<ul>
-
-							{% for paso in receta.pasos %}
-								<li>
-									{{ paso }}
-								</li>
-							{% endfor %}
-
-						</ul>
+					<div class="col-12 d-flex justify-content-center">
+					{% if receta.imagen %}
+						<ul><img src="{{ asset('uploads/images/' ~ receta.imagen) }}" width="250" height="250"></ul>
+					{% endif %}
 					</div>
 				</div>
 			</div>

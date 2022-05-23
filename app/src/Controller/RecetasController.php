@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\FileUploader;
 
 class RecetasController extends AbstractController
 {
@@ -32,17 +33,12 @@ class RecetasController extends AbstractController
         ]);
     }
 
+
     #[Route('/recetas/new', name: 'nueva_receta')]
-    public function new(Request $request, ManagerRegistry $doctrine): Response
+    public function new(Request $request, ManagerRegistry $doctrine, FileUploader $fileUploader): Response
     {
         // creates a receta object and initializes some data for this example
         $receta = new Recetas();
-        $receta->setNombre('Titulo de la receta');
-        $receta->setTipo('Tipo de receta');
-        $receta->setCant(2);
-        $receta->setDificultad('Dificultad de la receta');
-        $receta->setImagen('Imagen de la receta');
-
 
         $form = $this->createFormBuilder($receta)
             ->add('nombre', TextType::class)
@@ -64,6 +60,11 @@ class RecetasController extends AbstractController
             $newreceta = $form->getData();
             $user = $this->getUser();
             $newreceta->setUserId($user);
+            $imageFile = $form->get('imagen')->getData();
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $newreceta->setImagen($imageFileName);
+            }
                     // tell Doctrine you want to (eventually) save the Product (no queries yet)
             $entityManager->persist($newreceta);
             // actually executes the queries (i.e. the INSERT query)
@@ -75,5 +76,19 @@ class RecetasController extends AbstractController
         return $this->renderForm('recetas/new.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    #[Route('/recetas/{id}', name: 'ver-receta')]
+    public function verReceta($id,Request $request,RecetasRepository $recetasRepository): Response
+    {
+
+        $receta = $recetasRepository->find($id);
+
+        if (!$receta) {
+            throw $this->createNotFoundException(
+                'Vaya, no existe esa receta!'
+            );
+        }
+        return $this->render('recetas/ver-receta.html.twig',['receta'=>$receta]);
     }
 }
