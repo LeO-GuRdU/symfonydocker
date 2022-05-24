@@ -14,22 +14,31 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\FileUploader;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class RecetasController extends AbstractController
 {
     #[Route('/recetas', name: 'app_recetas')]
-    public function index(RecetasRepository $recetasRepository): Response
+    public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
     {
 
-        $recetas = $recetasRepository->findAll();
-
-        if (!$recetas) {
+        
+        $dql   = "SELECT a FROM App\Entity\Recetas a";
+        $query = $em->createQuery($dql);
+    
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+        if (!$pagination) {
             throw $this->createNotFoundException(
                 'No hay recetas en el sitio'
             );
         }
         return $this->render('recetas/index.html.twig', [
-            'recetas' => $recetas
+            'recetas' => $pagination
         ]);
     }
 

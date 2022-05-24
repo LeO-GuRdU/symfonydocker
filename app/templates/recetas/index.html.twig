@@ -18,18 +18,19 @@
 			padding: 2px 6px;
 		}
 	</style>
-
-	<div class="example-wrapper bg-light" >
-	<div class="col d-flex justify-content-center">
-		<h1 style="color:rgb(235, 145, 72);text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF">Recetas en el sitio</h1>
-	</div>
+	<div class="example-wrapper bg-light">
+		<div class="col d-flex justify-content-center">
+			<h1 style="color:rgb(235, 145, 72);text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF">Recetas en el sitio {{ recetas.getTotalItemCount }}</h1>
+		</div>
 		{% for receta in recetas %}
 
 			<div class="container shadow bg-secondary rounded my-3 p-5 border border-dark">
 				<div class="row">
 					<div class="col">
 						<h2>Titulo:
-							<a class="my-3" style="color:#3282b8;" href='{{ path('ver-receta',{id:receta.id})}}'><strong>{{ receta.nombre }}</strong></a>
+							<a class="my-3" style="color:#3282b8;" href='{{ path('ver-receta',{id:receta.id})}}'>
+								<strong>{{ receta.nombre }}</strong>
+							</a>
 						</h2>
 					</div>
 				</div>
@@ -49,13 +50,14 @@
 				</div>
 				<div class="row">
 					<div class="col-12 d-flex justify-content-center">
-					{% if receta.imagen %}
-						<ul><img src="{{ asset('uploads/images/' ~ receta.imagen) }}" width="250" height="250"></ul>
-					{% endif %}
+						{% if receta.imagen %}
+							<ul><img src="{{ asset('uploads/images/' ~ receta.imagen) }}" width="250" height="250"></ul>
+						{% endif %}
 					</div>
 				</div>
 			</div>
-
 		{% endfor %}
-	</div>
-{% endblock %}
+		<div class="navigation">
+			{{ knp_pagination_render(recetas) }}
+		</div>
+	{% endblock %}
