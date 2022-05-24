@@ -19,16 +19,16 @@
 
 						{% if app.user %}
 							<div class="mb-3">
-								You are logged in as
+								Estás logueado como 
 								{{ app.user.userIdentifier }},
 								<a href="{{ path('app_logout') }}">Logout</a>
 							</div>
 						{% endif %}
-						<div class="mb-3">
-							<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+						<div class="mb-3 text-center">
+							<h1 class="h3 mb-3 font-weight-normal">Ingresar al sitio</h1>
 						</div>
 						<div class="mb-3">
-							<label for="username">User Name:</label>
+							<label for="username">Nombre de Usuario:</label>
 							<input type="text" id="username" name="_username" value="{{ last_username }}"/>
 						</div>
 						<div class="mb-3">
@@ -48,9 +48,9 @@
 																		        </div>
 																		    #}
 						</div>
-						<div class="mb-3 justify-content-center">
+						<div class="mb-3 text-center">
 							<button class="btn btn-lg btn-primary" type="submit">
-								Sign in
+								Inicio de sesión
 							</button>
 						</div>
 					</form>

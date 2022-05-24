@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+
+		.navigation{
+			display: flex;
+  			justify-content: center;
+		}
+
+		.pagination {
+			text-align: center;
+		}
+
+		.pagination a {
+  			color: black;
+  			float: left;
+  			padding: 8px 16px;
+  			text-decoration: none;
+			border-radius: 5px;
+			border: 1px solid #ddd;
+		}
+		.current {
+			color: black;
+  			float: left;
+  			padding: 8px 16px;
+  			text-decoration: none;
+  			background-color: #4CAF50;
+  			color: white;
+			border-radius: 5px;
+			border: 1px solid #ddd;
+		}
+
+		.pagination a:hover:not(.active) {background-color: #ddd;}
+	</style>
+	<div class="example-wrapper bg-light">
+		<div class="col d-flex justify-content-center">
+			<h1 style="color:rgb(235, 145, 72);text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF">Tus Recetas en el sitio ({{ recetas.getTotalItemCount }})</h1>
+		</div>
+		{% for receta in recetas %}
+
+			<div class="container shadow bg-secondary rounded my-3 p-5 border border-dark">
+				<div class="row">
+					<div class="col">
+						<h2>Titulo:
+							<a class="my-3" style="color:#3282b8;" href='{{ path('ver-receta',{id:receta.id})}}'>
+								<strong>{{ receta.nombre }}</strong>
+							</a>
+						</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						Comensales:
+						{{ receta.cant }}
+					</div>
+					<div class="col">
+						Tipo de receta:
+						{{ receta.tipo }}
+					</div>
+					<div class="col">
+						Dificultad de la receta:
+						{{ receta.dificultad }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 d-flex justify-content-center">
+						{% if receta.imagen %}
+							<ul><img src="{{ asset('uploads/images/' ~ receta.imagen) }}" width="250" height="250"></ul>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+
+		
+		<div class="navigation">
+			{{ knp_pagination_render(recetas) }}
+		</div>
+
+	{% endblock %}

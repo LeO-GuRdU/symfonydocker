@@ -14,6 +14,10 @@ recetas:
     path:       /recetas/new
     controller: App\Controller\RecetasController::new
 
+misRecetas:
+    path:       /recetas/mis-recetas
+    controller: App\Controller\RecetasController::misRecetas
+
 app_logout:
     path: /logout
     methods: GET

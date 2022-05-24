@@ -41,6 +41,30 @@ class RecetasController extends AbstractController
             'recetas' => $pagination
         ]);
     }
+    
+    #[Route('/mis-recetas', name: 'app_mis_recetas')]
+    public function misRecetas(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
+    {
+
+        $user = $this->getUser();
+        $id = $user->getId();
+        $dql   = "SELECT a FROM App\Entity\Recetas a WHERE a.UserId = " . $id;
+        $query = $em->createQuery($dql);
+    
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+        if (!$pagination) {
+            throw $this->createNotFoundException(
+                'No tienes recetas en el sitio'
+            );
+        }
+        return $this->render('recetas/mis-recetas.html.twig', [
+            'recetas' => $pagination
+        ]);
+    }
 
 
     #[Route('/recetas/new', name: 'nueva_receta')]
