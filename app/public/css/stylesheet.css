@@ -1,0 +1,63 @@
+
+/* Estilo para el contenedor de recetas */
+
+.example-wrapper {
+    margin: 1em auto;
+    max-width: 800px;
+    width: 95%;
+    font: 18px / 1.5 sans-serif;
+}
+.example-wrapper code {
+    background: #F5F5F5;
+    padding: 2px 6px;
+}
+
+receta {
+    background: red;
+  }
+
+/* Fin de estilo para el contenedor de recetas */
+
+/* Estilo para el paginador */
+
+.navigation{
+    display: flex;
+      justify-content: center;
+}
+
+.pagination {
+    text-align: center;
+}
+
+.pagination a {
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+.current {
+    color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      background-color: #4CAF50;
+      color: white;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+/* Fin estilo para el paginador */
+
+/* Media Queries */
+
+@media screen and (min-width: 1200px) {   
+    receta {
+      background: red;
+    }
+}
+
+/* Fin Media Queries */

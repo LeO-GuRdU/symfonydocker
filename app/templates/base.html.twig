@@ -21,8 +21,10 @@
 		{% endblock %}
 
 		{% block javascripts %}
+			<script src="https://kit.fontawesome.com/68a497bbdd.js" crossorigin="anonymous"></script>
 			<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 			<script src="{{asset('js/add-collection-widget.js')}}"></script>
+			<link rel="stylesheet" media="mediatype and|not|only (expressions)" href="{{asset('css/stylesheet.css')}}">
 			{{ encore_entry_script_tags('app') }}
 			<!-- JavaScript Bundle with Popper -->
 
@@ -54,7 +56,9 @@
 						</ul>
 						<form class="d-flex" role="login">
 							{% if app.user %}
-								<li class="nav-item">{{ app.user.userIdentifier }}</li>
+							<ul class="fa-ul my-auto">
+								<li class="nav-item pe-2"><span class="fa-li"><i class="fa-solid fa-user-check"></i></span>{{ app.user.userIdentifier }}</li>
+							</ul>
 								<a class="btn btn-outline-success" href="{{ path('app_logout') }}" role="button">Logout</a>
 							{% else %}
 								<a class="btn btn-outline-success" href="{{ path('app_register') }}" role="button">Registrate</a>
