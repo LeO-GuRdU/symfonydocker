@@ -10,20 +10,20 @@
 		<div class="row h-100 justify-content-center align-items-center">
 			<! -- Contenedor que tiene todo el formulario de ver receta en su interior -->
 			<div class="col-6 shadow bg-light rounded my-3 p-5 border border-dark" id="receta">
-				<div class="col d-flex justify-content-center">
-					<h1>Receta de
-						{{ receta.nombre }}</h1>
+				<div class="col d-flex flex-row-reverse">
+					{% if app.user and receta.userid.id == app.user.getid() %}
+						<a style="color:#3282b8;" href='{{ path('editar-receta',{id:receta.id})}}'>
+							<strong>
+								<i class="fa-solid fa-pen-to-square"></i>Editar</strong>
+						</a>
+					{% endif %}
 				</div>
-
-
+				<div class="col d-flex mb-3 justify-content-center">
+					<h1>Receta de
+						{{ receta.nombre }}
+					</h1>
+				</div>
 				<div class="container">
-					<div class="row">
-						<div class="col">
-							<h2>Titulo:
-								{{ receta.nombre }}
-							</h2>
-						</div>
-					</div>
 					<div class="row">
 						<div class="col-xl border border-dark text-center">
 							Comensales:

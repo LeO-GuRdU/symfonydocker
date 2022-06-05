@@ -103,13 +103,60 @@ class RecetasController extends AbstractController
             // actually executes the queries (i.e. the INSERT query)
             $entityManager->flush();
 
-            return new Response('Saved new product with id '.$newreceta->getId());
+            return new Response('Se guardó la receta con el id '.$newreceta->getId());
         }
 
         return $this->renderForm('recetas/new.html.twig', [
             'form' => $form,
         ]);
     }
+
+    #[Route('/recetas/editar/{id}', name: 'editar-receta')]
+    public function update(Request $request, ManagerRegistry $doctrine, FileUploader $fileUploader, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $receta = $entityManager->getRepository(Recetas::class)->find($id);
+
+        if (!$receta) {
+            throw $this->createNotFoundException(
+                'No se encontró una receta con el id: '.$id
+            );
+        }
+
+        $form = $this->createFormBuilder($receta)
+        ->add('nombre', TextType::class)
+        ->add('tipo', TextType::class)
+        ->add('cant', IntegerType::class)
+        ->add('dificultad', TextType::class)
+        ->add('imagen', TextType::class)
+        ->add('save', SubmitType::class, ['label' => 'Guardar Receta'])
+        ->getForm();
+
+
+        $form = $this->createForm(RecetasType::class, $receta);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $entityManager = $doctrine->getManager();
+            $receta = $form->getData();
+            $imageFile = $form->get('imagen')->getData();
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $receta->setImagen($imageFileName);
+            }
+                    // tell Doctrine you want to (eventually) save the Product (no queries yet)
+            $entityManager->persist($receta);
+            // actually executes the queries (i.e. the INSERT query)
+            $entityManager->flush();
+
+            return new Response('Se actualizó la receta con el id '.$receta->getId());
+        }
+        return $this->renderForm('recetas/editar.html.twig', [
+            'form' => $form,
+        ]);
+}
 
     #[Route('/recetas/{id}', name: 'ver-receta')]
     public function verReceta($id,Request $request,RecetasRepository $recetasRepository): Response

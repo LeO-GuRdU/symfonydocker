@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{# ... #}
+{# this tag only applies to the forms defined in this template #}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+	{% block body %}
+	{{ parent() }}
+		<div class="container h-100"> <div class="row h-100 justify-content-center align-items-center">
+			<! -- Contenedor que tiene todo el formulario de registro en su interior -->
+			<div class="col-6 shadow bg-secondary rounded my-3 p-5 border border-dark" id="receta">
+				<div class="col d-flex justify-content-center">
+					<h1>Editando Receta:</h1>
+				</div>
+
+
+				{{ form_start(form) }}
+				{{ form_row(form.nombre) }}
+				<div class="mb-3">
+				{{ form_label(form.tipo) }}
+				{{ form_widget(form.tipo, { 'empty_value': 'Elija una opción' }) }}
+				</div>
+				{{ form_row(form.cant) }}
+				<div class="mb-3">
+				{{ form_label(form.dificultad) }}
+				{{ form_widget(form.dificultad, { 'empty_value': 'Elija una opción' }) }}
+				</div>
+				<div class="mb-3">
+				{{ form_label(form.ingredientes) }}
+				<ul id="ingrediente-fields-list" data-prototype="{{ form_widget(form.ingredientes.vars.prototype)|e }}" data-widget-tags="{{ '<li></li>'|e }}" data-widget-counter="{{ form.ingredientes|length }}">
+					{% for textField in form.ingredientes %}
+						<li>
+							{{ form_errors(textField) }}
+							{{ form_widget(textField) }}
+						</li>
+					{% endfor %}
+				</ul>
+				<button type="button" class="add-another-collection-widget" data-list-selector="#ingrediente-fields-list">Agregar Ingrediente</button>
+				</div>
+				<div class="mb-3">
+				{{ form_label(form.pasos) }}
+				{# store the prototype on the data-prototype attribute #}
+				<ul id="pasos-fields-list" data-prototype="{{ form_widget(form.pasos.vars.prototype)|e }}" data-widget-tags="{{ '<li></li>'|e }}" data-widget-counter="{{ form.pasos|length }}">
+					{% for textField in form.pasos %}
+						<li>
+							{{ form_errors(textField) }}
+							{{ form_widget(textField) }}
+						</li>
+					{% endfor %}
+				</ul>
+				<button type="button" class="add-another-collection-widget" data-list-selector="#pasos-fields-list">Agregar Paso</button>
+				</div>
+				<div class="mb-3">
+				{{ form_row(form.imagen) }}
+				</div>
+				<div class="mb-3 text-center">
+				{{ form_row(form.guardar, { 'label': 'Editar Receta' }) }}
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

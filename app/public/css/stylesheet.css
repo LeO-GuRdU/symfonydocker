@@ -1,4 +1,9 @@
 
+body {
+	background-image: url('../images/hand-drawn-food-background.webp');
+}
+
+
 /* Estilo para el contenedor de recetas */
 
 .example-wrapper {
@@ -11,10 +16,6 @@
     background: #F5F5F5;
     padding: 2px 6px;
 }
-
-receta {
-    background: red;
-  }
 
 /* Fin de estilo para el contenedor de recetas */
 
@@ -54,10 +55,14 @@ receta {
 
 /* Media Queries */
 
-@media screen and (min-width: 1200px) {   
-    receta {
-      background: red;
-    }
+@media screen and (max-width: 1200px) {   
+  #receta{
+    width: 600px;
+  }
+
+  #login{
+    width: 500px;
+  }
 }
 
 /* Fin Media Queries */
