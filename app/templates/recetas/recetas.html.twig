@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+
+	<div class="example-wrapper bg-light">
+		<div class="col d-flex justify-content-center">
+			<h1 style="color:rgb(235, 145, 72);text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF">Recetas en el sitio
+				{{ recetas.getTotalItemCount }}</h1>
+		</div>
+		<div class="container shadow bg-light rounded my-3 p-5 border border-dark">
+			<div class="row">
+				<div class="col">
+					<div class="accordion accordion-flush" id="accordionFlushExample">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="flush-headingOne">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+									Filtros
+								</button>
+							</h2>
+							<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+								<div class="accordion-body">
+									{{ form_start(form) }}
+									<input type="button" value="Limpiar Filtros">
+									{{ form_end(form) }}
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				{% for receta in recetas %}
+
+					<div class="container shadow bg-light rounded my-3 p-5 border border-dark">
+						<div class="row">
+							<div class="col">
+								<h2>Titulo:
+									<a class="my-3" style="color:#3282b8;" href='{{ path('ver-receta',{id:receta.id})}}'>
+										<strong>{{ receta.nombre }}</strong>
+									</a>
+								</h2>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								Comensales:
+								{{ receta.cant }}
+							</div>
+							<div class="col">
+								Tipo de receta:
+								{{ receta.tipo }}
+							</div>
+							<div class="col">
+								Dificultad de la receta:
+								{{ receta.dificultad }}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 d-flex justify-content-center">
+								{% if receta.imagen %}
+									<ul><img class="img-fluid" src="{{ asset('uploads/images/' ~ receta.imagen) }}" width="250" height="250"></ul>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+
+
+				<div class="navigation">
+					{{ knp_pagination_render(recetas) }}
+				</div>
+
+			{% endblock %}
